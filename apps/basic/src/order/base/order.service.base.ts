@@ -18,6 +18,9 @@ import {
   Product as PrismaProduct,
 } from "@prisma/client";
 
+import { CheckStatusArgs } from "../CheckStatusArgs";
+import { Order } from "./Order";
+
 export class OrderServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
 
@@ -65,5 +68,8 @@ export class OrderServiceBase {
         where: { id: parentId },
       })
       .product();
+  }
+  async CheckStatus(args: CheckStatusArgs): Promise<Order> {
+    throw new Error("Not implemented");
   }
 }

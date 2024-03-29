@@ -28,6 +28,7 @@ import { UpdateOrderArgs } from "./UpdateOrderArgs";
 import { DeleteOrderArgs } from "./DeleteOrderArgs";
 import { Customer } from "../../customer/base/Customer";
 import { Product } from "../../product/base/Product";
+import { CheckStatusArgs } from "../CheckStatusArgs";
 import { OrderService } from "../order.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Order)
@@ -204,5 +205,13 @@ export class OrderResolverBase {
       return null;
     }
     return result;
+  }
+
+  @graphql.Query(() => Order)
+  async CheckStatus(
+    @graphql.Args()
+    args: CheckStatusArgs
+  ): Promise<Order> {
+    return this.service.CheckStatus(args);
   }
 }
