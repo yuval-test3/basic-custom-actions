@@ -26,6 +26,7 @@ import { Order } from "./Order";
 import { OrderFindManyArgs } from "./OrderFindManyArgs";
 import { OrderWhereUniqueInput } from "./OrderWhereUniqueInput";
 import { OrderUpdateInput } from "./OrderUpdateInput";
+import { CheckStatusArgs } from "../CheckStatusArgs";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -281,5 +282,22 @@ export class OrderControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/:id/check-status")
+  @swagger.ApiOkResponse({
+    type: Order,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CheckStatus(
+    @common.Param()
+    params: CheckStatusArgs
+  ): Promise<Order> {
+    return this.service.CheckStatus(params);
   }
 }
